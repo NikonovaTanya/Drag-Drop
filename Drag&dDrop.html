@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+  <script type="text/javascript" src="d.js"></script>
+  <title>Drag&Drop</title>
+  <style type="text/css">
+ *{
+    margin: 10px;
+	padding: 10px;
+ }
+.title
+{ text-align: center;
+  font-family: arial;
+  font-size: 30px;
+  color: blue;
+
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.box {
+  background-color: white;
+  color: blue;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
+  height: 500px;
+}
+
+.work {
+  background-color: pink;
+  color: blue;
+  font-size: 20px;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+}
+  </style>
+  <script type="text/javascript">
+     window.onload = function () {
+     let dropTarget = document.querySelector(".wrapper");
+     let draggables = document.querySelectorAll(".work");
+     for(let i = 0; i < draggables.length; i++) {
+      draggables[i].addEventListener("dragstart", function (ev) {
+     ev.dataTransfer.setData("srcId", ev.target.id);
+       });
+    } 
+
+
+  dropTarget.addEventListener('dragover', function(ev) {
+    ev.preventDefault();
+  });
+
+  dropTarget.addEventListener('drop', function(ev) {
+  ev.preventDefault();
+  let target = ev.target;
+  let droppable  = target.classList.contains('box');
+  let srcId = ev.dataTransfer.getData("srcId");
+  
+  if (droppable) {
+    ev.target.appendChild(document.getElementById(srcId));
+  }
+  });
+}
+  </script>
+</head>
+<body class="title">  CANBAN
+  <div class="wrapper">
+    <div class="box">To Dо
+      <div id="work1" class="work" draggable="true">
+         HOUSEWORK 1
+      </div>
+      <div id="work2" class="work" draggable="true">
+         HOUSEWORK 2
+      </div>
+      <div id="work3" class="work" draggable="true">
+         HOUSEWORK 3
+      </div>
+      <div id="work4" class="work" draggable="true">
+         HOUSEWORK 4
+      </div>
+      <div id="work5" class="work" draggable="true">
+         HOUSEWORK 5
+      </div>
+    </div>
+    
+    <div class="box">In Progress
+    </div>
+    <div class="box">Finished
+    </div>
+  </div>
+</body>
+</html>
